@@ -1,24 +1,19 @@
-import React from "react";
-import logo from "./logo.svg";
+import { useState } from "react";
 import "./App.css";
+import Employee from "./models/employee";
+import SecretSantaAssigner from "./secret-santa/secret-santa";
+import CsvUploader from "./csv-uploader/csv-uploader";
 
 function App() {
+  const [employees, setEmployees] = useState<Employee[]>([]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <header className="App-header">SECRET SANTA</header>
+      <div>
+        <CsvUploader onUpload={setEmployees} />
+        {employees.length > 0 && <SecretSantaAssigner employees={employees} />}
+      </div>
     </div>
   );
 }
