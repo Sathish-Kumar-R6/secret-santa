@@ -3,9 +3,12 @@ import Employee from "./employee";
 
 class SecretSantaGame {
   employees: Employee[];
-  previousAssignments: Map<string, string>;
+  previousAssignments: Map<string, Employee>;
 
-  constructor(employees: Employee[], previousAssignments: Map<string, string>) {
+  constructor(
+    employees: Employee[],
+    previousAssignments: Map<string, Employee>,
+  ) {
     this.employees = employees;
     this.previousAssignments = previousAssignments;
   }
@@ -20,7 +23,7 @@ class SecretSantaGame {
         (child) =>
           child.name !== employee.name &&
           (!this.previousAssignments.has(employee.name) ||
-            this.previousAssignments.get(employee.name) !== child.name),
+            this.previousAssignments.get(employee.name)?.email !== child.email),
       );
 
       if (eligibleChildren.length === 0) {

@@ -1,14 +1,13 @@
-import React from "react";
-import Employee from "../models/employee";
-import * as XLSX from "xlsx";
-import { EmployeeRow } from "./csv-uploader.types";
 import Upload from "../ui/upload/upload";
+import Employee from "../models/employee";
+import { EmployeeRow } from "./csv-uploader.types";
+import * as XLSX from "xlsx";
 
-type CsvUPloaderProps = {
-  onUpload: (employees: Employee[]) => void;
+type LastYearSantaCsvProps = {
+  onUpload: (employees: Map<string, Employee>) => void;
 };
 
-function CsvUploader({ onUpload }: CsvUPloaderProps) {
+function LastYearSantaCsv({ onUpload }: LastYearSantaCsvProps) {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -21,20 +20,23 @@ function CsvUploader({ onUpload }: CsvUPloaderProps) {
         const json = XLSX.utils.sheet_to_json<EmployeeRow>(sheet);
 
         // Convert the parsed data into Employee objects
-        const employees = json.map(
-          (row) => new Employee(row.Employee_Name, row.Employee_EmailID),
+        const prevEmployees = new Map<string, Employee>();
+        json.forEach((row) =>
+          prevEmployees.set(row.Employee_Name, {
+            name: row.Employee_Name,
+            email: row.Employee_EmailID,
+          }),
         );
-        onUpload(employees);
+        onUpload(prevEmployees);
+        console.log("employees value", prevEmployees);
       };
       reader.readAsArrayBuffer(file);
     }
   };
+
   return (
-    <div>
-      <h3>Upload Employee Excel or CSV File</h3>
-      <Upload accept=".xlsx,.xls,.csv,.ods" handleChange={handleFileUpload} />
-    </div>
+    <Upload accept=".xlsx,.xls,.csv,.ods" handleChange={handleFileUpload} />
   );
 }
 
-export default CsvUploader;
+export default LastYearSantaCsv;

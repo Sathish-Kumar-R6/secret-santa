@@ -6,8 +6,12 @@ import ResultTable from "../results/result-table";
 
 type SecretSantaAssignerProps = {
   employees: Employee[];
+  prevEmployees?: Map<string, Employee>;
 };
-const SecretSantaAssigner = ({ employees }: SecretSantaAssignerProps) => {
+const SecretSantaAssigner = ({
+  employees,
+  prevEmployees,
+}: SecretSantaAssignerProps) => {
   const [assignments, setAssignments] = useState<Map<
     Employee,
     Employee
@@ -15,7 +19,9 @@ const SecretSantaAssigner = ({ employees }: SecretSantaAssignerProps) => {
 
   const handleAssign = () => {
     try {
-      const previousAssignments = new Map(); // Replace with actual logic to load previous assignments
+      const previousAssignments = prevEmployees
+        ? prevEmployees
+        : new Map<string, Employee>(); // Replace with actual logic to load previous assignments
       const game = new SecretSantaGame(employees, previousAssignments);
       const result = game.assignSecretChildren();
       setAssignments(result);
