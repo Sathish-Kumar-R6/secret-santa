@@ -1,10 +1,10 @@
 import Upload from "../ui/upload/upload";
-import Employee from "../models/employee";
-import { EmployeeRow } from "./csv-uploader.types";
+import { SecretSheetInterface } from "./csv-uploader.types";
 import * as XLSX from "xlsx";
+import { SecretGiversInterface } from "../models/model.types";
 
 type LastYearSantaCsvProps = {
-  onUpload: (employees: Map<string, Employee>) => void;
+  onUpload: (employees: SecretGiversInterface[]) => void;
 };
 
 function LastYearSantaCsv({ onUpload }: LastYearSantaCsvProps) {
@@ -17,16 +17,17 @@ function LastYearSantaCsv({ onUpload }: LastYearSantaCsvProps) {
         const workbook = XLSX.read(data, { type: "array" });
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
-        const json = XLSX.utils.sheet_to_json<EmployeeRow>(sheet);
+        const json = XLSX.utils.sheet_to_json<SecretSheetInterface>(sheet);
 
         // Convert the parsed data into Employee objects
-        const prevEmployees = new Map<string, Employee>();
-        json.forEach((row) =>
-          prevEmployees.set(row.Employee_Name, {
-            name: row.Employee_Name,
-            email: row.Employee_EmailID,
-          }),
-        );
+        const prevEmployees: SecretGiversInterface[] = json.map((row) => {
+          return {
+            employee_name: row.Employee_Name,
+            employee_email: row.Employee_EmailID,
+            secret_emp_name: row.Secret_Child_Name,
+            secret_emp_email: row.Secret_Child_EmailID,
+          };
+        });
         onUpload(prevEmployees);
         console.log("employees value", prevEmployees);
       };
