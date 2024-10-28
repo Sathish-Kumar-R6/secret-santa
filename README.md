@@ -38,3 +38,11 @@ The frontend application allows users to upload CSV files and interact with the 
 
    - Open [http://localhost:3000](http://localhost:3000) in your browser.
    - Once on the app, you can upload two CSV files as required for the project.
+
+### UI Attachment
+- UI before uploading attachments
+![image](https://github.com/user-attachments/assets/5cb9e806-1668-4890-96b7-ba2665b8f34b)
+
+- UI santa result
+![image](https://github.com/user-attachments/assets/00cfe905-a013-4058-b63f-b50a64e9e029)
+
