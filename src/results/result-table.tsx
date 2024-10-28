@@ -1,7 +1,7 @@
-import Employee from "../models/employee";
+import { SecretSheetInterface } from "../csv-uploader/csv-uploader.types";
 
 type ResultTableProps = {
-  assignments: Map<Employee, Employee>;
+  assignments: SecretSheetInterface[];
 };
 
 function ResultTable({ assignments }: ResultTableProps) {
@@ -16,12 +16,12 @@ function ResultTable({ assignments }: ResultTableProps) {
         </tr>
       </thead>
       <tbody>
-        {Array.from(assignments.entries()).map(([giver, receiver], index) => (
+        {assignments.map((assignment, index) => (
           <tr key={index}>
-            <td>{giver.name}</td>
-            <td>{giver.email}</td>
-            <td>{receiver.name}</td>
-            <td>{receiver.email}</td>
+            <td>{assignment.Employee_Name}</td>
+            <td>{assignment.Employee_EmailID}</td>
+            <td>{assignment.Secret_Child_Name}</td>
+            <td>{assignment.Secret_Child_EmailID}</td>
           </tr>
         ))}
       </tbody>
