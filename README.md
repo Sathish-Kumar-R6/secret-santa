@@ -35,3 +35,6 @@ The frontend application allows users to upload CSV files and interact with the 
    - Start the application:
      ```bash
      yarn start
+
+   - Open [http://localhost:3000](http://localhost:3000) in your browser.
+   - Once on the app, you can upload two CSV files as required for the project.
