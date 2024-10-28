@@ -1,4 +1,7 @@
+import classNames from "classnames/bind";
 import { SecretSheetInterface } from "../csv-uploader/csv-uploader.types";
+import styles from "./result-table.module.css";
+const cx = classNames.bind(styles);
 
 type ResultTableProps = {
   assignments: SecretSheetInterface[];
@@ -6,14 +9,16 @@ type ResultTableProps = {
 
 function ResultTable({ assignments }: ResultTableProps) {
   return (
-    <table>
+    <table className={cx("santa-table")}>
       <thead>
-        <tr>
-          <th>Employee Name</th>
-          <th>Employee Email</th>
-          <th>Secret Child Name</th>
-          <th>Secret Child Email</th>
-        </tr>
+        {assignments.length > 0 && (
+          <tr>
+            <th>Employee Name</th>
+            <th>Employee Email</th>
+            <th>Secret Child Name</th>
+            <th>Secret Child Email</th>
+          </tr>
+        )}
       </thead>
       <tbody>
         {assignments.map((assignment, index) => (

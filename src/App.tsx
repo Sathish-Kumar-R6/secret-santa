@@ -10,7 +10,7 @@ function App() {
 
   return (
     <main className="App">
-      <header className="App-header">SECRET SANTA</header>
+      <header className="App-header">AMCE&apos;s SECRET SANTA</header>
       <div>
         <CsvUploader onUpload={setEmployeeFile} />
         <LastYearSantaCsv onUpload={setPrevEmployeesFile} />
