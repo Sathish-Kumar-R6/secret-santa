@@ -15,7 +15,11 @@ function CsvUploader({ onUpload }: CsvUPloaderProps) {
   return (
     <div>
       <h3>Upload Employee Excel or CSV File</h3>
-      <Upload accept=".xlsx,.xls,.csv,.ods" handleChange={handleFileUpload} />
+      <Upload
+        label="Upload this year employee file"
+        accept=".xlsx,.xls,.csv,.ods"
+        handleChange={handleFileUpload}
+      />
     </div>
   );
 }
