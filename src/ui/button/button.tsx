@@ -8,11 +8,16 @@ type ButtonProps = {
   children: ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
+  className?: string;
 };
 
-function Button({ children, onClick, disabled }: ButtonProps) {
+function Button({ children, onClick, disabled, className }: ButtonProps) {
   return (
-    <button className={cx("ui-button")} onClick={onClick} disabled={disabled}>
+    <button
+      className={cx(className, "custom-button", { disabled })}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

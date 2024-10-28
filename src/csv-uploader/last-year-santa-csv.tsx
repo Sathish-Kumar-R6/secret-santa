@@ -13,7 +13,11 @@ function LastYearSantaCsv({ onUpload }: LastYearSantaCsvProps) {
   };
 
   return (
-    <Upload accept=".xlsx,.xls,.csv,.ods" handleChange={handleFileUpload} />
+    <Upload
+      label="Upload last year employee csv"
+      accept=".xlsx,.xls,.csv,.ods"
+      handleChange={handleFileUpload}
+    />
   );
 }
 
