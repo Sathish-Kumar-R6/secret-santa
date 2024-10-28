@@ -1,5 +1,6 @@
 import { SecretSheetInterface } from "../csv-uploader/csv-uploader.types";
 import Button from "../ui/button/button";
+import { assignSanta } from "../utils/api";
 
 type AssignSecretSantaProps = {
   employees?: File;
@@ -15,8 +16,12 @@ function AssignSecretSanta({
   const disabled =
     (employees ? employees.size <= 0 : true) ||
     (prevEmployees ? prevEmployees.size <= 0 : true);
-  const handleAssign = () => {
-    console.log(employees, prevEmployees, handleSetAssignments);
+  const handleAssign = async () => {
+    if (employees && prevEmployees) {
+      await assignSanta(employees, prevEmployees).then((res) => {
+        handleSetAssignments(res.data);
+      });
+    }
   };
   return (
     <Button onClick={handleAssign} disabled={disabled}>
