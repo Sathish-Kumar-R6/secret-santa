@@ -1,16 +1,15 @@
 import saveAs from "file-saver";
-import Employee from "../models/employee";
 import Button from "../ui/button/button";
+import { SecretSheetInterface } from "../csv-uploader/csv-uploader.types";
 
 type DownloadSecretSantaProps = {
-  assignments: Map<Employee, Employee> | null;
+  assignments: SecretSheetInterface[];
 };
 
 function DownloadSecretSanta({
   assignments,
 }: Readonly<DownloadSecretSantaProps>) {
-  const disabled = assignments ? assignments.size <= 0 : true;
-  console.log("assignemnts", assignments, assignments?.size);
+  const disabled = assignments && assignments.length <= 0;
   const handleDownload = () => {
     if (assignments) {
       const headers = [
@@ -23,12 +22,18 @@ function DownloadSecretSanta({
       const csvContent =
         headers.join(",") +
         "\n" + // Add headers and a new line
-        Array.from(assignments.entries())
+        assignments
           .map(
-            ([giver, receiver]) =>
-              `${giver.name},${giver.email},${receiver.name},${receiver.email}`,
+            ({
+              Employee_Name,
+              Employee_EmailID,
+              Secret_Child_Name,
+              Secret_Child_EmailID,
+            }) =>
+              `${Employee_Name},${Employee_EmailID},${Secret_Child_Name},${Secret_Child_EmailID}`,
           )
           .join("\n");
+
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       saveAs(blob, "secret_santa_assignments.csv");
     }

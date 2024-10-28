@@ -1,32 +1,27 @@
 import { useState } from "react";
-import Employee from "../models/employee";
 import ResultTable from "../results/result-table";
-import { SecretGiversInterface } from "../models/model.types";
 import DownloadSecretSanta from "./download-secret-santa";
 import AssignSecretSanta from "./assign-secret-santa";
+import { SecretSheetInterface } from "../csv-uploader/csv-uploader.types";
 
 type SecretSantaAssignerProps = {
-  employees: Employee[];
-  prevEmployees: SecretGiversInterface[];
+  employeeFile?: File;
+  prevEmployeeFile?: File;
 };
 const SecretSantaAssigner = ({
-  employees,
-  prevEmployees,
+  employeeFile,
+  prevEmployeeFile,
 }: SecretSantaAssignerProps) => {
-  const [assignments, setAssignments] = useState<Map<
-    Employee,
-    Employee
-  > | null>(null);
-
-  const handleSetAssignments = (emp: Map<Employee, Employee>) => {
-    setAssignments(emp);
+  const [assignments, setAssigments] = useState<SecretSheetInterface[]>([]);
+  const handleSetAssignments = (data: SecretSheetInterface[]) => {
+    setAssigments(data);
   };
 
   return (
     <div>
       <AssignSecretSanta
-        employees={employees}
-        prevEmployees={prevEmployees}
+        employees={employeeFile}
+        prevEmployees={prevEmployeeFile}
         handleSetAssignments={handleSetAssignments}
       />
       <DownloadSecretSanta assignments={assignments} />

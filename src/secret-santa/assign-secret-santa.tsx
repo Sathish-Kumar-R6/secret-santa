@@ -1,12 +1,10 @@
-import Employee from "../models/employee";
-import { SecretGiversInterface } from "../models/model.types";
-import SecretSantaGame from "../models/secret-santa-game";
+import { SecretSheetInterface } from "../csv-uploader/csv-uploader.types";
 import Button from "../ui/button/button";
 
 type AssignSecretSantaProps = {
-  employees: Employee[];
-  prevEmployees: SecretGiversInterface[];
-  handleSetAssignments: (emp: Map<Employee, Employee>) => void;
+  employees?: File;
+  prevEmployees?: File;
+  handleSetAssignments: (data: SecretSheetInterface[]) => void;
 };
 
 function AssignSecretSanta({
@@ -14,17 +12,11 @@ function AssignSecretSanta({
   prevEmployees,
   handleSetAssignments,
 }: AssignSecretSantaProps) {
-  const disabled = employees.length <= 0 || prevEmployees.length <= 0;
+  const disabled =
+    (employees ? employees.size <= 0 : true) ||
+    (prevEmployees ? prevEmployees.size <= 0 : true);
   const handleAssign = () => {
-    try {
-      const previousAssignments = prevEmployees || []; // Replace with actual logic to load previous assignments
-      const game = new SecretSantaGame(employees, previousAssignments);
-      const result = game.generateAssignments();
-      handleSetAssignments(result);
-    } catch (error) {
-      const typedError = error as Error;
-      alert(typedError.message);
-    }
+    console.log(employees, prevEmployees, handleSetAssignments);
   };
   return (
     <Button onClick={handleAssign} disabled={disabled}>
